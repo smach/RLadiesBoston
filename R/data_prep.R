@@ -16,16 +16,17 @@ places <- rio::import("data/weekly-dashboard-data-11-27-2020.xlsx", sheet = "Cit
   mutate(
     Place = trimws(gsub("*", "", `City/Town`, fixed = TRUE)),
     County = county_lookup[tolower(Place)],
-    Cases = readr::parse_integer(`Two Week Case Counts`),
-    Positivity = readr::parse_number(`Percent Positivity`)
+    CasesPer100K = round(parse_number(`Average Daily Rate`), 1),
+    Positivity = round(parse_number(`Percent Positivity`),3) * 100
   ) %>%
-  filter(!is.na(County) & !is.na(Cases)) %>%
-  select(Place, County, Cases, Positivity)
+  filter(!is.na(County) & !is.na(CasesPer100K)) %>%
+  select(Place, County, CasesPer100K, Positivity)
 
 counties <- rio::import("data/weekly-dashboard-data-11-27-2020.xlsx", sheet = "county") %>%
   mutate(
     County = trimws(gsub(" Count[yi]e?s?", "", County)),
-    Positivity = round(readr::parse_number(`Percent Positivity (Last 14 days)`), 3)
+    CasesPer100K = round(parse_number(`Average Daily Incidence Rate per 100,000 (Last 14 days)`),1),
+    Positivity = round(parse_number(`Percent Positivity (Last 14 days)`), 3) * 100
   ) %>%
   filter(!is.na(County) & !is.na(Positivity & County != "State")) %>%
-  select(County, Cases = `Case Count (Last 14 Days)`, Positivity)
+  select(County, CasesPer100K, Positivity)
