@@ -1,0 +1,107 @@
+---
+title: "Create Table with Sparklines"
+subtitle: "Presentation at R Ladies Boston"
+author: "Sharon Machlis"
+date: "2021-01-12"
+output: 
+  html_document:
+    css: "css/theme-rladies.css"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Import data from CovidActNow.org
+
+```{r}
+pacman::p_load(rio, dplyr, DT, sparkline)
+latest_data <- import("data/latest_covid_by_state.csv") %>%
+  select(state, newCasesPer100K = metrics.caseDensity, testPositivity = metrics.testPositivityRatio, lastUpdatedDate) %>%
+  mutate(
+    newCasesPer100K = round(newCasesPer100K, 1),
+    testPositivity = round(testPositivity, 3)
+  ) %>%
+  arrange(desc(newCasesPer100K))
+
+all_data <- import("data/all_covid_by_state.csv") %>%
+  select(state, newCasesPer100K = metrics.caseDensity, testPositivity = metrics.testPositivityRatio, date) %>%
+  filter(date >= as.Date("2020-04-01")) %>%
+  mutate(
+    newCasesPer100K = round(newCasesPer100K, 1),
+    testPositivity = round(testPositivity, 3)
+  ) %>%
+  arrange(state, date)
+
+head(all_data)
+
+```
+
+## Prep data for sparkline column newCasesPer100K
+
+Brute-force reduce number of entries: Start April 1 and take every 7th item only (once per week). Then use the sparkline package's spk_chr() function to generate the HTML for a line sparkline.
+
+```{r, message=FALSE}
+sparkline_data <- all_data %>%
+  filter(date >= as.Date("2020-04-01")) %>%
+  slice(which(row_number() %% 7 == 1)) %>%
+  group_by(state) %>%
+  summarize(
+    CasesPer100KTrend = spk_chr(
+      newCasesPer100K, type ="line",
+      chartRangeMin = 0, chartRangeMax = max(newCasesPer100K, na.rm = TRUE)
+    )
+  )
+
+
+```
+
+Join sparkline_data and latest_data:
+
+```{r}
+table_data <- left_join(sparkline_data, latest_data)
+
+
+```
+
+Add region to have something interesting to filter:
+
+```{r}
+regions <- rio::import("data/census_regions.csv") %>%
+  select(state = `State Code`, region = Division)
+table_data <- left_join(table_data, regions)
+
+```
+
+
+
+
+Create table
+
+```{r}
+datatable(table_data, escape = FALSE, 
+          options = list(pageLength = 25,
+            search = list(regex = TRUE),                                      fnDrawCallback = htmlwidgets::JS(
+                                      '
+function(){
+  HTMLWidgets.staticRender();
+}
+'
+)), rownames = FALSE, filter = 'top') %>%
+      spk_add_deps()   %>%
+      formatPercentage("testPositivity", digits = 1)
+    
+
+  
+
+
+
+```
+
+
+
+
+
+
+
+
