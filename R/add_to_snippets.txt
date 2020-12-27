@@ -1,0 +1,48 @@
+snippet sparkline_table
+		datatable(${1:mydata}, escape = FALSE, 
+	options = list(pageLength = 25,search = list(regex = TRUE),
+		fnDrawCallback = htmlwidgets::JS(
+		   '
+		function(){
+		HTMLWidgets.staticRender();
+		}
+		'
+		)), rownames = FALSE, filter = 'top') %>%
+			spk_add_deps()
+
+snippet sparkline_column
+	  group_by(${1:my_index_column}) %>%
+	  summarize(
+	    Trend = spk_chr(
+	      ${2:mydatacol}, type ="line",
+	      chartRangeMin = 0, chartRangeMax = max(${2:mydatacol}, na.rm = TRUE)
+	    )
+	  )
+
+snippet DT_regex_search
+	DT::datatable(${1:mydf}, rownames = FALSE, filter = 'top', 
+	options = list(pageLength = ${2:num},
+	           search = list(regex = TRUE)
+						)
+		)
+
+snippet expandable_row_table
+  # Function needed according to Greg Lin, creator of reactable
+  html <- function(x, inline = FALSE) {
+    container <- if (inline) htmltools::span else htmltools::div
+    container(dangerouslySetInnerHTML = list("__html" = x))
+  }
+  reactable(${1:mydf}, striped = TRUE, highlight = TRUE, resizable = TRUE,   searchable = TRUE,
+            columns = list(
+              Source = colDef(html = TRUE),
+              ${2:mycol} = colDef(show = FALSE)
+            ),
+              # if ${2:mycol} exist, make that expandable
+              details = function(index) {
+                if(${1:mydf}[['${2:mycol}']][index] != "") {
+                  htmltools::tagList(
+                    html(${1:mydf}[['${2:mycol}']][index])
+                  )
+                } 
+              }
+  )

@@ -4,11 +4,11 @@
     <title>Interactive Tables in R with DT and reactable</title>
     <meta charset="utf-8" />
     <meta name="author" content="Sharon Machlis" />
-    <meta name="date" content="2021-01-12" />
     <script src="libs/header-attrs-2.5/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/rladies.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/rladies-fonts.css" rel="stylesheet" />
+    <link href="libs/font-awesome-5.3.1/css/fontawesome-all.min.css" rel="stylesheet" />
     <script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
     <script src="libs/jquery-1.12.4/jquery.min.js"></script>
     <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
@@ -44,21 +44,27 @@ class: center, middle, inverse, title-slide
 # Interactive Tables in R<br />with DT and reactable
 ## Presentation at R Ladies Boston
 ### Sharon Machlis
-### 2021-01-12
+### 2021-01-12<br /><br /><i class="fab  fa-twitter "></i><a href="https://twitter.com/sharon000">sharon000</a><br />Do More With R tutorials - <a href="bit.ly/domorewithR">bit.ly/domorewithR</a>
 
 ---
 
 
+
 class: center, middle
+## Winner: [RStudio Table Contest](https://blog.rstudio.com/2020/12/23/winners-of-the-2020-rstudio-table-contest/)
+
+
 
 ![](img/sqltable.gif)
 
 ---
 class: center, middle
+[RStudio Table Contest Honorable Mention](https://blog.rstudio.com/2020/12/23/winners-of-the-2020-rstudio-table-contest/)
 ![](img/binge_table.PNG)
 
 ---
-Combine table data with mini data visualizations (sparklines):
+## I've found useful:
+Combine a searchable, sortable table of _latest_ data with mini data visualizations (sparklines) showing _trends_:
 
 ![](img/covid.gif)
 ---
@@ -71,7 +77,8 @@ Combine table data with mini data visualizations (sparklines):
 ### reactable
 
 ---
-#### Get latest Covid data by state:
+#### Example: Latest Covid Data by State
+Import CSV file into R
 
 
 ```r
@@ -87,26 +94,26 @@ state_data &lt;- rio::import("data/latest_covid_by_state.csv") %&gt;%
 
 ---
 
-## DT default [https://rstudio.github.io/DT/](https://rstudio.github.io/DT/)
+## Basic DT table default [https://rstudio.github.io/DT/](https://rstudio.github.io/DT/)
 
 
 ```r
 DT::datatable(state_data, options = list(pageLength = 6))
 ```
 
-<div id="htmlwidget-7289bf8a188e030c600e" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7289bf8a188e030c600e">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53"],["TN","CA","AZ","OK","AL","RI","AR","IN","UT","KS","NV","MS","OH","WV","PA","MA","GA","ID","DE","NM","SC","WY","NY","SD","NC","TX","LA","FL","WI","KY","IA","IL","CT","NE","MO","NJ","NH","MT","VA","CO","AK","MD","MN","ND","ME","DC","WA","MI","PR","OR","VT","HI","MP"],[109.1,103.7,88.3,87.9,82.9,79,78.6,75.6,74.3,72.4,72.4,70.8,70.2,69.8,67.9,67.7,66.1,65.2,62.3,62.1,61.7,58.1,56.4,54.1,53.5,53.4,52.8,52.6,52.2,52,51.8,51.6,50.7,50.7,50.1,49.1,48.7,47.1,46.6,46.2,43.7,39.6,38.6,35.4,35.3,32.5,31.2,30.3,27.1,26.7,14.5,9.3,1.3],[0.189,0.131,0.165,0.22,0.177,0.066,0.114,0.158,0.15,0.148,0.18,0.148,0.137,0.106,0.146,0.063,0.138,0.145,0.09,0.107,0.153,0.077,0.074,0.114,0.111,0.141,0.104,0.105,0.086,0.118,0.112,0.097,0.111,0.159,0.165,0.107,0.131,0.112,0.151,0.07,0.042,0.08,0.065,0.047,0.04,0.039,0.081,0.094,0.115,0.073,0.028,0.03,null],["2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>state<\/th>\n      <th>newCasesPer100K<\/th>\n      <th>testPositivity<\/th>\n      <th>lastUpdatedDate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[6,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-18315a356bdce81c880c" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-18315a356bdce81c880c">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53"],["TN","CA","AZ","OK","AL","RI","AR","IN","UT","KS","NV","MS","OH","WV","PA","MA","GA","ID","DE","NM","SC","WY","NY","SD","NC","TX","LA","FL","WI","KY","IA","IL","CT","NE","MO","NJ","NH","MT","VA","CO","AK","MD","MN","ND","ME","DC","WA","MI","PR","OR","VT","HI","MP"],[109.1,103.7,88.3,87.9,82.9,79,78.6,75.6,74.3,72.4,72.4,70.8,70.2,69.8,67.9,67.7,66.1,65.2,62.3,62.1,61.7,58.1,56.4,54.1,53.5,53.4,52.8,52.6,52.2,52,51.8,51.6,50.7,50.7,50.1,49.1,48.7,47.1,46.6,46.2,43.7,39.6,38.6,35.4,35.3,32.5,31.2,30.3,27.1,26.7,14.5,9.3,1.3],[0.189,0.131,0.165,0.22,0.177,0.066,0.114,0.158,0.15,0.148,0.18,0.148,0.137,0.106,0.146,0.063,0.138,0.145,0.09,0.107,0.153,0.077,0.074,0.114,0.111,0.141,0.104,0.105,0.086,0.118,0.112,0.097,0.111,0.159,0.165,0.107,0.131,0.112,0.151,0.07,0.042,0.08,0.065,0.047,0.04,0.039,0.081,0.094,0.115,0.073,0.028,0.03,null],["2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>state<\/th>\n      <th>newCasesPer100K<\/th>\n      <th>testPositivity<\/th>\n      <th>lastUpdatedDate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[6,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 
 ---
-## reactable default
+## Basic reactable table default
 
 
 ```r
 reactable::reactable(state_data)
 ```
 
-<div id="htmlwidget-72c7e9d2d9f1336d2978" class="reactable html-widget" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-72c7e9d2d9f1336d2978">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"state":["TN","CA","AZ","OK","AL","RI","AR","IN","UT","KS","NV","MS","OH","WV","PA","MA","GA","ID","DE","NM","SC","WY","NY","SD","NC","TX","LA","FL","WI","KY","IA","IL","CT","NE","MO","NJ","NH","MT","VA","CO","AK","MD","MN","ND","ME","DC","WA","MI","PR","OR","VT","HI","MP"],"newCasesPer100K":[109.1,103.7,88.3,87.9,82.9,79,78.6,75.6,74.3,72.4,72.4,70.8,70.2,69.8,67.9,67.7,66.1,65.2,62.3,62.1,61.7,58.1,56.4,54.1,53.5,53.4,52.8,52.6,52.2,52,51.8,51.6,50.7,50.7,50.1,49.1,48.7,47.1,46.6,46.2,43.7,39.6,38.6,35.4,35.3,32.5,31.2,30.3,27.1,26.7,14.5,9.3,1.3],"testPositivity":[0.189,0.131,0.165,0.22,0.177,0.066,0.114,0.158,0.15,0.148,0.18,0.148,0.137,0.106,0.146,0.063,0.138,0.145,0.09,0.107,0.153,0.077,0.074,0.114,0.111,0.141,0.104,0.105,0.086,0.118,0.112,0.097,0.111,0.159,0.165,0.107,0.131,0.112,0.151,0.07,0.042,0.08,0.065,0.047,0.04,0.039,0.081,0.094,0.115,0.073,0.028,0.03,"NA"],"lastUpdatedDate":["2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25"]},"columns":[{"accessor":"state","name":"state","type":"character"},{"accessor":"newCasesPer100K","name":"newCasesPer100K","type":"numeric"},{"accessor":"testPositivity","name":"testPositivity","type":"numeric"},{"accessor":"lastUpdatedDate","name":"lastUpdatedDate","type":"Date"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"dataKey":"8ecd1214d615366e75b496bc385a84cc","key":"8ecd1214d615366e75b496bc385a84cc"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-343ed9b839f2a352c4db" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-343ed9b839f2a352c4db">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"state":["TN","CA","AZ","OK","AL","RI","AR","IN","UT","KS","NV","MS","OH","WV","PA","MA","GA","ID","DE","NM","SC","WY","NY","SD","NC","TX","LA","FL","WI","KY","IA","IL","CT","NE","MO","NJ","NH","MT","VA","CO","AK","MD","MN","ND","ME","DC","WA","MI","PR","OR","VT","HI","MP"],"newCasesPer100K":[109.1,103.7,88.3,87.9,82.9,79,78.6,75.6,74.3,72.4,72.4,70.8,70.2,69.8,67.9,67.7,66.1,65.2,62.3,62.1,61.7,58.1,56.4,54.1,53.5,53.4,52.8,52.6,52.2,52,51.8,51.6,50.7,50.7,50.1,49.1,48.7,47.1,46.6,46.2,43.7,39.6,38.6,35.4,35.3,32.5,31.2,30.3,27.1,26.7,14.5,9.3,1.3],"testPositivity":[0.189,0.131,0.165,0.22,0.177,0.066,0.114,0.158,0.15,0.148,0.18,0.148,0.137,0.106,0.146,0.063,0.138,0.145,0.09,0.107,0.153,0.077,0.074,0.114,0.111,0.141,0.104,0.105,0.086,0.118,0.112,0.097,0.111,0.159,0.165,0.107,0.131,0.112,0.151,0.07,0.042,0.08,0.065,0.047,0.04,0.039,0.081,0.094,0.115,0.073,0.028,0.03,"NA"],"lastUpdatedDate":["2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25"]},"columns":[{"accessor":"state","name":"state","type":"character"},{"accessor":"newCasesPer100K","name":"newCasesPer100K","type":"numeric"},{"accessor":"testPositivity","name":"testPositivity","type":"numeric"},{"accessor":"lastUpdatedDate","name":"lastUpdatedDate","type":"Date"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"dataKey":"8ecd1214d615366e75b496bc385a84cc","key":"8ecd1214d615366e75b496bc385a84cc"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 
 ---
 ## DT advantages
@@ -118,8 +125,8 @@ Built-in filters sensitive to data type
 DT::datatable(state_data, options = list(pageLength = 6), filter = 'top')
 ```
 
-<div id="htmlwidget-7a49b62a472e3015ab63" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7a49b62a472e3015ab63">{"x":{"filter":"top","filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1.3\" data-max=\"109.1\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.028\" data-max=\"0.22\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53"],["TN","CA","AZ","OK","AL","RI","AR","IN","UT","KS","NV","MS","OH","WV","PA","MA","GA","ID","DE","NM","SC","WY","NY","SD","NC","TX","LA","FL","WI","KY","IA","IL","CT","NE","MO","NJ","NH","MT","VA","CO","AK","MD","MN","ND","ME","DC","WA","MI","PR","OR","VT","HI","MP"],[109.1,103.7,88.3,87.9,82.9,79,78.6,75.6,74.3,72.4,72.4,70.8,70.2,69.8,67.9,67.7,66.1,65.2,62.3,62.1,61.7,58.1,56.4,54.1,53.5,53.4,52.8,52.6,52.2,52,51.8,51.6,50.7,50.7,50.1,49.1,48.7,47.1,46.6,46.2,43.7,39.6,38.6,35.4,35.3,32.5,31.2,30.3,27.1,26.7,14.5,9.3,1.3],[0.189,0.131,0.165,0.22,0.177,0.066,0.114,0.158,0.15,0.148,0.18,0.148,0.137,0.106,0.146,0.063,0.138,0.145,0.09,0.107,0.153,0.077,0.074,0.114,0.111,0.141,0.104,0.105,0.086,0.118,0.112,0.097,0.111,0.159,0.165,0.107,0.131,0.112,0.151,0.07,0.042,0.08,0.065,0.047,0.04,0.039,0.081,0.094,0.115,0.073,0.028,0.03,null],["2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>state<\/th>\n      <th>newCasesPer100K<\/th>\n      <th>testPositivity<\/th>\n      <th>lastUpdatedDate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[6,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-8f992fca3fab77cf1d11" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8f992fca3fab77cf1d11">{"x":{"filter":"top","filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1.3\" data-max=\"109.1\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.028\" data-max=\"0.22\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53"],["TN","CA","AZ","OK","AL","RI","AR","IN","UT","KS","NV","MS","OH","WV","PA","MA","GA","ID","DE","NM","SC","WY","NY","SD","NC","TX","LA","FL","WI","KY","IA","IL","CT","NE","MO","NJ","NH","MT","VA","CO","AK","MD","MN","ND","ME","DC","WA","MI","PR","OR","VT","HI","MP"],[109.1,103.7,88.3,87.9,82.9,79,78.6,75.6,74.3,72.4,72.4,70.8,70.2,69.8,67.9,67.7,66.1,65.2,62.3,62.1,61.7,58.1,56.4,54.1,53.5,53.4,52.8,52.6,52.2,52,51.8,51.6,50.7,50.7,50.1,49.1,48.7,47.1,46.6,46.2,43.7,39.6,38.6,35.4,35.3,32.5,31.2,30.3,27.1,26.7,14.5,9.3,1.3],[0.189,0.131,0.165,0.22,0.177,0.066,0.114,0.158,0.15,0.148,0.18,0.148,0.137,0.106,0.146,0.063,0.138,0.145,0.09,0.107,0.153,0.077,0.074,0.114,0.111,0.141,0.104,0.105,0.086,0.118,0.112,0.097,0.111,0.159,0.165,0.107,0.131,0.112,0.151,0.07,0.042,0.08,0.065,0.047,0.04,0.039,0.081,0.094,0.115,0.073,0.028,0.03,null],["2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>state<\/th>\n      <th>newCasesPer100K<\/th>\n      <th>testPositivity<\/th>\n      <th>lastUpdatedDate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[6,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 
 ---
 ## DT advantages (cont)
@@ -139,8 +146,8 @@ options = list(pageLength = 6, dom = 'Bfrtip',
           buttons = c('copy', 'csv', 'excel', 'pdf', 'print')) )
 ```
 
-<div id="htmlwidget-682e9031acb667eba9b8" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-682e9031acb667eba9b8">{"x":{"filter":"top","filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1.3\" data-max=\"109.1\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.028\" data-max=\"0.22\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","extensions":["Buttons"],"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53"],["TN","CA","AZ","OK","AL","RI","AR","IN","UT","KS","NV","MS","OH","WV","PA","MA","GA","ID","DE","NM","SC","WY","NY","SD","NC","TX","LA","FL","WI","KY","IA","IL","CT","NE","MO","NJ","NH","MT","VA","CO","AK","MD","MN","ND","ME","DC","WA","MI","PR","OR","VT","HI","MP"],[109.1,103.7,88.3,87.9,82.9,79,78.6,75.6,74.3,72.4,72.4,70.8,70.2,69.8,67.9,67.7,66.1,65.2,62.3,62.1,61.7,58.1,56.4,54.1,53.5,53.4,52.8,52.6,52.2,52,51.8,51.6,50.7,50.7,50.1,49.1,48.7,47.1,46.6,46.2,43.7,39.6,38.6,35.4,35.3,32.5,31.2,30.3,27.1,26.7,14.5,9.3,1.3],[0.189,0.131,0.165,0.22,0.177,0.066,0.114,0.158,0.15,0.148,0.18,0.148,0.137,0.106,0.146,0.063,0.138,0.145,0.09,0.107,0.153,0.077,0.074,0.114,0.111,0.141,0.104,0.105,0.086,0.118,0.112,0.097,0.111,0.159,0.165,0.107,0.131,0.112,0.151,0.07,0.042,0.08,0.065,0.047,0.04,0.039,0.081,0.094,0.115,0.073,0.028,0.03,null],["2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>state<\/th>\n      <th>newCasesPer100K<\/th>\n      <th>testPositivity<\/th>\n      <th>lastUpdatedDate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"dom":"Bfrtip","buttons":["copy","csv","excel","pdf","print"],"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[6,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-19d6db18ded201e7e1dc" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-19d6db18ded201e7e1dc">{"x":{"filter":"top","filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1.3\" data-max=\"109.1\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.028\" data-max=\"0.22\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","extensions":["Buttons"],"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53"],["TN","CA","AZ","OK","AL","RI","AR","IN","UT","KS","NV","MS","OH","WV","PA","MA","GA","ID","DE","NM","SC","WY","NY","SD","NC","TX","LA","FL","WI","KY","IA","IL","CT","NE","MO","NJ","NH","MT","VA","CO","AK","MD","MN","ND","ME","DC","WA","MI","PR","OR","VT","HI","MP"],[109.1,103.7,88.3,87.9,82.9,79,78.6,75.6,74.3,72.4,72.4,70.8,70.2,69.8,67.9,67.7,66.1,65.2,62.3,62.1,61.7,58.1,56.4,54.1,53.5,53.4,52.8,52.6,52.2,52,51.8,51.6,50.7,50.7,50.1,49.1,48.7,47.1,46.6,46.2,43.7,39.6,38.6,35.4,35.3,32.5,31.2,30.3,27.1,26.7,14.5,9.3,1.3],[0.189,0.131,0.165,0.22,0.177,0.066,0.114,0.158,0.15,0.148,0.18,0.148,0.137,0.106,0.146,0.063,0.138,0.145,0.09,0.107,0.153,0.077,0.074,0.114,0.111,0.141,0.104,0.105,0.086,0.118,0.112,0.097,0.111,0.159,0.165,0.107,0.131,0.112,0.151,0.07,0.042,0.08,0.065,0.047,0.04,0.039,0.081,0.094,0.115,0.073,0.028,0.03,null],["2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>state<\/th>\n      <th>newCasesPer100K<\/th>\n      <th>testPositivity<\/th>\n      <th>lastUpdatedDate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"dom":"Bfrtip","buttons":["copy","csv","excel","pdf","print"],"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[6,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 
 ---
 ## Reactable advantages
@@ -152,8 +159,8 @@ library(reactable)
 reactable(state_data, resizable = TRUE, searchable = TRUE)
 ```
 
-<div id="htmlwidget-6c678a65ed5c83de6ff8" class="reactable html-widget" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-6c678a65ed5c83de6ff8">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"state":["TN","CA","AZ","OK","AL","RI","AR","IN","UT","KS","NV","MS","OH","WV","PA","MA","GA","ID","DE","NM","SC","WY","NY","SD","NC","TX","LA","FL","WI","KY","IA","IL","CT","NE","MO","NJ","NH","MT","VA","CO","AK","MD","MN","ND","ME","DC","WA","MI","PR","OR","VT","HI","MP"],"newCasesPer100K":[109.1,103.7,88.3,87.9,82.9,79,78.6,75.6,74.3,72.4,72.4,70.8,70.2,69.8,67.9,67.7,66.1,65.2,62.3,62.1,61.7,58.1,56.4,54.1,53.5,53.4,52.8,52.6,52.2,52,51.8,51.6,50.7,50.7,50.1,49.1,48.7,47.1,46.6,46.2,43.7,39.6,38.6,35.4,35.3,32.5,31.2,30.3,27.1,26.7,14.5,9.3,1.3],"testPositivity":[0.189,0.131,0.165,0.22,0.177,0.066,0.114,0.158,0.15,0.148,0.18,0.148,0.137,0.106,0.146,0.063,0.138,0.145,0.09,0.107,0.153,0.077,0.074,0.114,0.111,0.141,0.104,0.105,0.086,0.118,0.112,0.097,0.111,0.159,0.165,0.107,0.131,0.112,0.151,0.07,0.042,0.08,0.065,0.047,0.04,0.039,0.081,0.094,0.115,0.073,0.028,0.03,"NA"],"lastUpdatedDate":["2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25"]},"columns":[{"accessor":"state","name":"state","type":"character"},{"accessor":"newCasesPer100K","name":"newCasesPer100K","type":"numeric"},{"accessor":"testPositivity","name":"testPositivity","type":"numeric"},{"accessor":"lastUpdatedDate","name":"lastUpdatedDate","type":"Date"}],"resizable":true,"searchable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"dataKey":"8ecd1214d615366e75b496bc385a84cc","key":"8ecd1214d615366e75b496bc385a84cc"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b2e15de5f42caf0355bb" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-b2e15de5f42caf0355bb">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"state":["TN","CA","AZ","OK","AL","RI","AR","IN","UT","KS","NV","MS","OH","WV","PA","MA","GA","ID","DE","NM","SC","WY","NY","SD","NC","TX","LA","FL","WI","KY","IA","IL","CT","NE","MO","NJ","NH","MT","VA","CO","AK","MD","MN","ND","ME","DC","WA","MI","PR","OR","VT","HI","MP"],"newCasesPer100K":[109.1,103.7,88.3,87.9,82.9,79,78.6,75.6,74.3,72.4,72.4,70.8,70.2,69.8,67.9,67.7,66.1,65.2,62.3,62.1,61.7,58.1,56.4,54.1,53.5,53.4,52.8,52.6,52.2,52,51.8,51.6,50.7,50.7,50.1,49.1,48.7,47.1,46.6,46.2,43.7,39.6,38.6,35.4,35.3,32.5,31.2,30.3,27.1,26.7,14.5,9.3,1.3],"testPositivity":[0.189,0.131,0.165,0.22,0.177,0.066,0.114,0.158,0.15,0.148,0.18,0.148,0.137,0.106,0.146,0.063,0.138,0.145,0.09,0.107,0.153,0.077,0.074,0.114,0.111,0.141,0.104,0.105,0.086,0.118,0.112,0.097,0.111,0.159,0.165,0.107,0.131,0.112,0.151,0.07,0.042,0.08,0.065,0.047,0.04,0.039,0.081,0.094,0.115,0.073,0.028,0.03,"NA"],"lastUpdatedDate":["2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25","2020-12-25"]},"columns":[{"accessor":"state","name":"state","type":"character"},{"accessor":"newCasesPer100K","name":"newCasesPer100K","type":"numeric"},{"accessor":"testPositivity","name":"testPositivity","type":"numeric"},{"accessor":"lastUpdatedDate","name":"lastUpdatedDate","type":"Date"}],"resizable":true,"searchable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"dataKey":"8ecd1214d615366e75b496bc385a84cc","key":"8ecd1214d615366e75b496bc385a84cc"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 
 ---
 ## Reactable advantages (cont)
@@ -171,9 +178,266 @@ Example: [http://apps.machlis.com/shiny/nicar20_resources/](http://apps.machlis.
 
 ---
 
+## Code review: Create sparkline data frame
+
+Group and summarize by state to get one row for each state
+
+
+```r
+sparkline_data &lt;- all_data %&gt;%
+  filter(date &gt;= as.Date("2020-04-01")) %&gt;%
+  slice(which(row_number() %% 7 == 1)) %&gt;%
+*  group_by(state) %&gt;%
+*  summarize(
+    CasesPer100KTrend = spk_chr(
+      newCasesPer100K, type ="line",
+      chartRangeMin = 0, 
+      chartRangeMax = max(newCasesPer100K, na.rm = TRUE)
+    )
+  )
+```
+
+---
+Use sparkline package's `spk_chr()` function to create new column CasesPer100KTrend with the sparkline.
+
+Arguments are the column with data (`newCasesPer100K`), sparkline type (`"line"`), and optional y-axis min and max values.
+
+
+```r
+sparkline_data &lt;- all_data %&gt;%
+  filter(date &gt;= as.Date("2020-04-01")) %&gt;%
+  slice(which(row_number() %% 7 == 1)) %&gt;%
+  group_by(state) %&gt;%
+  summarize(
+*    CasesPer100KTrend = spk_chr(
+*      newCasesPer100K, type ="line",
+*      chartRangeMin = 0, 
+*      chartRangeMax = max(newCasesPer100K, na.rm = TRUE)
+    )
+  )
+```
+
+---
+## Code review: Create table with sparklines
+
+`escape = FALSE` evaluates HTML to display as if it was on a Web page instead of showing the actual HTML code
+
+
+```r
+datatable(table_data, 
+*         escape = FALSE, 
+          options = list(pageLength = 25,
+          search = list(regex = TRUE),
+          fnDrawCallback = htmlwidgets::JS(
+                                      '
+function(){
+  HTMLWidgets.staticRender();
+}
+'
+)), rownames = FALSE, filter = 'top') %&gt;%
+      spk_add_deps()   %&gt;%
+      formatPercentage("testPositivity", digits = 1)
+```
+
+---
+This is optional - I'm enabling searching by regular expression
+
+
+```r
+datatable(table_data, 
+          escape = FALSE, 
+          options = list(pageLength = 25,
+          * search = list(regex = TRUE),
+          fnDrawCallback = htmlwidgets::JS(
+                                      '
+function(){
+  HTMLWidgets.staticRender();
+}
+'
+)), rownames = FALSE, filter = 'top') %&gt;%
+      spk_add_deps()   %&gt;%
+      formatPercentage("testPositivity", digits = 1)
+```
+
+---
+These lines of code are critical for the sparkline HTML to display as sparklines. They are the same for every table, and I've saved them as an RStudio code snippet.
+
+
+```r
+datatable(table_data, 
+          escape = FALSE, 
+          options = list(pageLength = 25,
+          search = list(regex = TRUE),
+*          fnDrawCallback = htmlwidgets::JS(
+*                                      '
+* function(){
+*  HTMLWidgets.staticRender();
+* }
+* '
+)), rownames = FALSE, filter = 'top') %&gt;%
+*      spk_add_deps()   %&gt;%
+      formatPercentage("testPositivity", digits = 1)
+```
+
+---
+My snippet which shows up when I type sparkline_table
+
+
+```r
+snippet sparkline_table
+		datatable(${1:mydata}, escape = FALSE, 
+	options = list(pageLength = 25,search = list(regex = TRUE),
+		fnDrawCallback = htmlwidgets::JS(
+		   '
+		function(){
+		HTMLWidgets.staticRender();
+		}
+		'
+		)), rownames = FALSE, filter = 'top') %&gt;%
+			spk_add_deps()
+```
+
+---
+
+![](img/snippet.gif)
+
+---
+## Code review: Create table with expandable row
+
+#### Add styling and options to default reactable: row stripes, reaction when hovering over a table row, allow columns to be resized, add search box.
+
+
+```r
+reactable(my_recipes, 
+*          striped = TRUE, highlight = TRUE, 
+*           resizable = TRUE, searchable = TRUE)
+```
+
+<div id="htmlwidget-bf4605f55881ac5eb3d7" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-bf4605f55881ac5eb3d7">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Title":["Cranberry Apple Bread","Cranberry Nut Bread","Harvest Apple Cranberry Cake"],"Ingredients":["2 cups peeled chopped apple, 3/4 cup sugar, 2 tablespoons oil, 1 egg, 1 1/2 cups flour. 1 1/2 teaspoons baking powder, 1/2 teaspoon baking soda, 1 teaspoon cinnamon, 1 cup cranberries (fresh or frozen), 1/2 cup chopped walnuts","2 cups flour, 1 cup sugar, 1 1/2 teaspoons baking powder, 1 teaspoon salt, 1/2 teaspoon baking soda, 3/4 cup orange juice, 1 tablespoon grated orange peel, 2 tablespoons shortening, 1 egg, well beaten, 1 1/2 cups coarsely chopped fresh or frozen cranberries, 1/2 cup chopped nuts","1 tablespoon (14g) butter, melted, 1 tablespoon (21g) boiled cider, optional, 1 1/2 cups (170g) fresh or frozen whole cranberries, 1 cup (113g) peeled diced fresh apple (about 1 medium-large apple), 1/4 cup (50g) sugar, 1 1/2 cups (180g) Unbleached All-Purpose Flour, heaping 1/2 teaspoon salt, 1 1/2 teaspoons baking powder, 1 teaspoon ground cinnamon, 2/3 cup (131g) sugar, 2/3 cup (170g) applesauce, unsweetened preferred, 8 tablespoons (113g) butter, melted, 2 large eggs, 1 teaspoon vanilla extract"],"Instructions":["Preheat oven to 350F. Grease an 8 1/2 x 4 1/2 x 2 1/2-inch loaf pan. Combine apples, sugar and oil in a medium mixing bowl. Add egg, mixing well. Combine dry ingredients in a separate mixing bowl. Add to apple mixture, mixing just until the dry ingredients are moist. Stir in cranberries and walnuts. Spread batter evenly in loaf pan. Bake for 1 hour or until a toothpick inserted into the center of the bread comes out clean. Makes 1 loaf.","Preheat oven to 350F. Grease a 9 x 5-inch loaf pan. \r\nMix together flour, sugar, baking powder, salt and baking soda in a medium mixing bowl. Stir in orange juice, orange peel, shortening and egg. Mix until well blended. Stir in cranberries and nuts. Spread evenly in loaf pan. Bake for 55 minutes or until a toothpick inserted in the center comes out clean. Cool on a rack for 15 minutes. Remove from pan; cool completely. Wrap and store overnight. Makes 1 loaf (16 slices).","Preheat the oven to 350F. Lightly grease an 8\" square or 9\" round pan.  To make the topping: Drizzle the 1 tablespoon butter and boiled cider into the bottom of the pan. Mix the cranberries and diced apples, and spread into the pan. Sprinkle with the sugar.<br />To make the cake: Stir together the cake ingredients, mixing until smooth. Spread the batter over the fruit in the pan. Bake the cake for 35 to 40 minutes, until the center feels firm when pressed, and a toothpick inserted into the middle comes out clean. Remove the cake from the oven, and invert it over a heatproof serving plate. Wait a few seconds, then carefully lift off the pan. Scrape any stuck-on fruit in the pan back onto the cake. Serve warm or at room temperature. Whipped cream is a suitable accompaniment."],"Source":["<a title='Ocean Spray' href='https://www.oceanspray.com/en/Recipes/By-Course/Breads-and-Muffins/Cranberry-Apple-Bread'>Ocean Spray<\/a> ","<a title='Ocean Spray' href='https://www.oceanspray.com/en/Recipes/By-Course/Breads-and-Muffins/Classic-Cranberry-Nut-Bread'>Ocean Spray<\/a> ","<a title='King Arthur Flour' href='https://www.kingarthurbaking.com/recipes/harvest-apple-cranberry-cake-recipe'>King Arthur Flour<\/a> "]},"columns":[{"accessor":"Title","name":"Title","type":"character"},{"accessor":"Ingredients","name":"Ingredients","type":"character"},{"accessor":"Instructions","name":"Instructions","type":"character"},{"accessor":"Source","name":"Source","type":["glue","character"]}],"resizable":true,"searchable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"highlight":true,"striped":true,"dataKey":"29b10a5de0ad789ef9553f6648c35082","key":"29b10a5de0ad789ef9553f6648c35082"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+
+---
+#### Add column definition for Source column so HTML displays as HTML
+
+
+```r
+reactable(my_recipes, striped = TRUE, highlight = TRUE, resizable = TRUE, searchable = TRUE,
+*         columns = list(
+*           Source = colDef(html = TRUE)
+*         )
+)  
+```
+
+<div id="htmlwidget-304b8b6b0a4835cb3489" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-304b8b6b0a4835cb3489">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Title":["Cranberry Apple Bread","Cranberry Nut Bread","Harvest Apple Cranberry Cake"],"Ingredients":["2 cups peeled chopped apple, 3/4 cup sugar, 2 tablespoons oil, 1 egg, 1 1/2 cups flour. 1 1/2 teaspoons baking powder, 1/2 teaspoon baking soda, 1 teaspoon cinnamon, 1 cup cranberries (fresh or frozen), 1/2 cup chopped walnuts","2 cups flour, 1 cup sugar, 1 1/2 teaspoons baking powder, 1 teaspoon salt, 1/2 teaspoon baking soda, 3/4 cup orange juice, 1 tablespoon grated orange peel, 2 tablespoons shortening, 1 egg, well beaten, 1 1/2 cups coarsely chopped fresh or frozen cranberries, 1/2 cup chopped nuts","1 tablespoon (14g) butter, melted, 1 tablespoon (21g) boiled cider, optional, 1 1/2 cups (170g) fresh or frozen whole cranberries, 1 cup (113g) peeled diced fresh apple (about 1 medium-large apple), 1/4 cup (50g) sugar, 1 1/2 cups (180g) Unbleached All-Purpose Flour, heaping 1/2 teaspoon salt, 1 1/2 teaspoons baking powder, 1 teaspoon ground cinnamon, 2/3 cup (131g) sugar, 2/3 cup (170g) applesauce, unsweetened preferred, 8 tablespoons (113g) butter, melted, 2 large eggs, 1 teaspoon vanilla extract"],"Instructions":["Preheat oven to 350F. Grease an 8 1/2 x 4 1/2 x 2 1/2-inch loaf pan. Combine apples, sugar and oil in a medium mixing bowl. Add egg, mixing well. Combine dry ingredients in a separate mixing bowl. Add to apple mixture, mixing just until the dry ingredients are moist. Stir in cranberries and walnuts. Spread batter evenly in loaf pan. Bake for 1 hour or until a toothpick inserted into the center of the bread comes out clean. Makes 1 loaf.","Preheat oven to 350F. Grease a 9 x 5-inch loaf pan. \r\nMix together flour, sugar, baking powder, salt and baking soda in a medium mixing bowl. Stir in orange juice, orange peel, shortening and egg. Mix until well blended. Stir in cranberries and nuts. Spread evenly in loaf pan. Bake for 55 minutes or until a toothpick inserted in the center comes out clean. Cool on a rack for 15 minutes. Remove from pan; cool completely. Wrap and store overnight. Makes 1 loaf (16 slices).","Preheat the oven to 350F. Lightly grease an 8\" square or 9\" round pan.  To make the topping: Drizzle the 1 tablespoon butter and boiled cider into the bottom of the pan. Mix the cranberries and diced apples, and spread into the pan. Sprinkle with the sugar.<br />To make the cake: Stir together the cake ingredients, mixing until smooth. Spread the batter over the fruit in the pan. Bake the cake for 35 to 40 minutes, until the center feels firm when pressed, and a toothpick inserted into the middle comes out clean. Remove the cake from the oven, and invert it over a heatproof serving plate. Wait a few seconds, then carefully lift off the pan. Scrape any stuck-on fruit in the pan back onto the cake. Serve warm or at room temperature. Whipped cream is a suitable accompaniment."],"Source":["<a title='Ocean Spray' href='https://www.oceanspray.com/en/Recipes/By-Course/Breads-and-Muffins/Cranberry-Apple-Bread'>Ocean Spray<\/a> ","<a title='Ocean Spray' href='https://www.oceanspray.com/en/Recipes/By-Course/Breads-and-Muffins/Classic-Cranberry-Nut-Bread'>Ocean Spray<\/a> ","<a title='King Arthur Flour' href='https://www.kingarthurbaking.com/recipes/harvest-apple-cranberry-cake-recipe'>King Arthur Flour<\/a> "]},"columns":[{"accessor":"Title","name":"Title","type":"character"},{"accessor":"Ingredients","name":"Ingredients","type":"character"},{"accessor":"Instructions","name":"Instructions","type":"character"},{"accessor":"Source","name":"Source","type":["glue","character"],"html":true}],"resizable":true,"searchable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"highlight":true,"striped":true,"dataKey":"ab4a0975c1beade39cbd6fb8a96e93fe","key":"ab4a0975c1beade39cbd6fb8a96e93fe"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+
+---
+
+#### Hide Instructions row, add function for expandable row
 
 
 
+```r
+*# Function needed according to Greg Lin, creator of reactable
+*html &lt;- function(x, inline = FALSE) {
+* container &lt;- if (inline) htmltools::span else htmltools::div
+* container(dangerouslySetInnerHTML = list("__html" = x))
+*} 
+
+reactable(my_recipes, striped = TRUE, highlight = TRUE, resizable = TRUE, searchable = TRUE,
+          columns = list(  
+            Source = colDef(html = TRUE),
+*           Instructions = colDef(show = FALSE)
+          )  
+)
+```
+
+<div id="htmlwidget-2e4a100727d1bff9efdb" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-2e4a100727d1bff9efdb">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Title":["Cranberry Apple Bread","Cranberry Nut Bread","Harvest Apple Cranberry Cake"],"Ingredients":["2 cups peeled chopped apple, 3/4 cup sugar, 2 tablespoons oil, 1 egg, 1 1/2 cups flour. 1 1/2 teaspoons baking powder, 1/2 teaspoon baking soda, 1 teaspoon cinnamon, 1 cup cranberries (fresh or frozen), 1/2 cup chopped walnuts","2 cups flour, 1 cup sugar, 1 1/2 teaspoons baking powder, 1 teaspoon salt, 1/2 teaspoon baking soda, 3/4 cup orange juice, 1 tablespoon grated orange peel, 2 tablespoons shortening, 1 egg, well beaten, 1 1/2 cups coarsely chopped fresh or frozen cranberries, 1/2 cup chopped nuts","1 tablespoon (14g) butter, melted, 1 tablespoon (21g) boiled cider, optional, 1 1/2 cups (170g) fresh or frozen whole cranberries, 1 cup (113g) peeled diced fresh apple (about 1 medium-large apple), 1/4 cup (50g) sugar, 1 1/2 cups (180g) Unbleached All-Purpose Flour, heaping 1/2 teaspoon salt, 1 1/2 teaspoons baking powder, 1 teaspoon ground cinnamon, 2/3 cup (131g) sugar, 2/3 cup (170g) applesauce, unsweetened preferred, 8 tablespoons (113g) butter, melted, 2 large eggs, 1 teaspoon vanilla extract"],"Instructions":["Preheat oven to 350F. Grease an 8 1/2 x 4 1/2 x 2 1/2-inch loaf pan. Combine apples, sugar and oil in a medium mixing bowl. Add egg, mixing well. Combine dry ingredients in a separate mixing bowl. Add to apple mixture, mixing just until the dry ingredients are moist. Stir in cranberries and walnuts. Spread batter evenly in loaf pan. Bake for 1 hour or until a toothpick inserted into the center of the bread comes out clean. Makes 1 loaf.","Preheat oven to 350F. Grease a 9 x 5-inch loaf pan. \r\nMix together flour, sugar, baking powder, salt and baking soda in a medium mixing bowl. Stir in orange juice, orange peel, shortening and egg. Mix until well blended. Stir in cranberries and nuts. Spread evenly in loaf pan. Bake for 55 minutes or until a toothpick inserted in the center comes out clean. Cool on a rack for 15 minutes. Remove from pan; cool completely. Wrap and store overnight. Makes 1 loaf (16 slices).","Preheat the oven to 350F. Lightly grease an 8\" square or 9\" round pan.  To make the topping: Drizzle the 1 tablespoon butter and boiled cider into the bottom of the pan. Mix the cranberries and diced apples, and spread into the pan. Sprinkle with the sugar.<br />To make the cake: Stir together the cake ingredients, mixing until smooth. Spread the batter over the fruit in the pan. Bake the cake for 35 to 40 minutes, until the center feels firm when pressed, and a toothpick inserted into the middle comes out clean. Remove the cake from the oven, and invert it over a heatproof serving plate. Wait a few seconds, then carefully lift off the pan. Scrape any stuck-on fruit in the pan back onto the cake. Serve warm or at room temperature. Whipped cream is a suitable accompaniment."],"Source":["<a title='Ocean Spray' href='https://www.oceanspray.com/en/Recipes/By-Course/Breads-and-Muffins/Cranberry-Apple-Bread'>Ocean Spray<\/a> ","<a title='Ocean Spray' href='https://www.oceanspray.com/en/Recipes/By-Course/Breads-and-Muffins/Classic-Cranberry-Nut-Bread'>Ocean Spray<\/a> ","<a title='King Arthur Flour' href='https://www.kingarthurbaking.com/recipes/harvest-apple-cranberry-cake-recipe'>King Arthur Flour<\/a> "]},"columns":[{"accessor":"Title","name":"Title","type":"character"},{"accessor":"Ingredients","name":"Ingredients","type":"character"},{"accessor":"Instructions","name":"Instructions","type":"character","show":false},{"accessor":"Source","name":"Source","type":["glue","character"],"html":true}],"resizable":true,"searchable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"highlight":true,"striped":true,"dataKey":"bbfcf1ac2792da25220564b03d0dde79","key":"bbfcf1ac2792da25220564b03d0dde79"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+
+---
+
+#### Finally, add details function to make the expandable rows come to life
+
+
+```r
+# Function needed according to Greg Lin, creator of reactable 
+html &lt;- function(x, inline = FALSE) { 
+  container &lt;- if (inline) htmltools::span else htmltools::div 
+  container(dangerouslySetInnerHTML = list("__html" = x)) 
+}  
+
+reactable(my_recipes, striped = TRUE, highlight = TRUE, resizable = TRUE, searchable = TRUE,
+          columns = list(  
+            Source = colDef(html = TRUE),
+*           Instructions = colDef(show = FALSE)
+          ),
+*           # if Instructions exist, make that expandable
+*           details = function(index) {
+*             if(my_recipes$Instructions[index] != "") {
+*               htmltools::tagList(
+*                 html(my_recipes$Instructions[index])
+*               )
+*             }
+*           }
+)
+```
+
+<div id="htmlwidget-b7852d7f4350fcf31194" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-b7852d7f4350fcf31194">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Title":["Cranberry Apple Bread","Cranberry Nut Bread","Harvest Apple Cranberry Cake"],"Ingredients":["2 cups peeled chopped apple, 3/4 cup sugar, 2 tablespoons oil, 1 egg, 1 1/2 cups flour. 1 1/2 teaspoons baking powder, 1/2 teaspoon baking soda, 1 teaspoon cinnamon, 1 cup cranberries (fresh or frozen), 1/2 cup chopped walnuts","2 cups flour, 1 cup sugar, 1 1/2 teaspoons baking powder, 1 teaspoon salt, 1/2 teaspoon baking soda, 3/4 cup orange juice, 1 tablespoon grated orange peel, 2 tablespoons shortening, 1 egg, well beaten, 1 1/2 cups coarsely chopped fresh or frozen cranberries, 1/2 cup chopped nuts","1 tablespoon (14g) butter, melted, 1 tablespoon (21g) boiled cider, optional, 1 1/2 cups (170g) fresh or frozen whole cranberries, 1 cup (113g) peeled diced fresh apple (about 1 medium-large apple), 1/4 cup (50g) sugar, 1 1/2 cups (180g) Unbleached All-Purpose Flour, heaping 1/2 teaspoon salt, 1 1/2 teaspoons baking powder, 1 teaspoon ground cinnamon, 2/3 cup (131g) sugar, 2/3 cup (170g) applesauce, unsweetened preferred, 8 tablespoons (113g) butter, melted, 2 large eggs, 1 teaspoon vanilla extract"],"Instructions":["Preheat oven to 350F. Grease an 8 1/2 x 4 1/2 x 2 1/2-inch loaf pan. Combine apples, sugar and oil in a medium mixing bowl. Add egg, mixing well. Combine dry ingredients in a separate mixing bowl. Add to apple mixture, mixing just until the dry ingredients are moist. Stir in cranberries and walnuts. Spread batter evenly in loaf pan. Bake for 1 hour or until a toothpick inserted into the center of the bread comes out clean. Makes 1 loaf.","Preheat oven to 350F. Grease a 9 x 5-inch loaf pan. \r\nMix together flour, sugar, baking powder, salt and baking soda in a medium mixing bowl. Stir in orange juice, orange peel, shortening and egg. Mix until well blended. Stir in cranberries and nuts. Spread evenly in loaf pan. Bake for 55 minutes or until a toothpick inserted in the center comes out clean. Cool on a rack for 15 minutes. Remove from pan; cool completely. Wrap and store overnight. Makes 1 loaf (16 slices).","Preheat the oven to 350F. Lightly grease an 8\" square or 9\" round pan.  To make the topping: Drizzle the 1 tablespoon butter and boiled cider into the bottom of the pan. Mix the cranberries and diced apples, and spread into the pan. Sprinkle with the sugar.<br />To make the cake: Stir together the cake ingredients, mixing until smooth. Spread the batter over the fruit in the pan. Bake the cake for 35 to 40 minutes, until the center feels firm when pressed, and a toothpick inserted into the middle comes out clean. Remove the cake from the oven, and invert it over a heatproof serving plate. Wait a few seconds, then carefully lift off the pan. Scrape any stuck-on fruit in the pan back onto the cake. Serve warm or at room temperature. Whipped cream is a suitable accompaniment."],"Source":["<a title='Ocean Spray' href='https://www.oceanspray.com/en/Recipes/By-Course/Breads-and-Muffins/Cranberry-Apple-Bread'>Ocean Spray<\/a> ","<a title='Ocean Spray' href='https://www.oceanspray.com/en/Recipes/By-Course/Breads-and-Muffins/Classic-Cranberry-Nut-Bread'>Ocean Spray<\/a> ","<a title='King Arthur Flour' href='https://www.kingarthurbaking.com/recipes/harvest-apple-cranberry-cake-recipe'>King Arthur Flour<\/a> "]},"columns":[{"accessor":".details","name":"","type":"NULL","sortable":false,"resizable":false,"filterable":false,"width":45,"align":"center","details":[{"name":"Fragment","attribs":[],"children":[{"name":"div","attribs":{"dangerouslySetInnerHTML":{"__html":"Preheat oven to 350F. Grease an 8 1/2 x 4 1/2 x 2 1/2-inch loaf pan. Combine apples, sugar and oil in a medium mixing bowl. Add egg, mixing well. Combine dry ingredients in a separate mixing bowl. Add to apple mixture, mixing just until the dry ingredients are moist. Stir in cranberries and walnuts. Spread batter evenly in loaf pan. Bake for 1 hour or until a toothpick inserted into the center of the bread comes out clean. Makes 1 loaf."}},"children":[]}]},{"name":"Fragment","attribs":[],"children":[{"name":"div","attribs":{"dangerouslySetInnerHTML":{"__html":"Preheat oven to 350F. Grease a 9 x 5-inch loaf pan. \r\nMix together flour, sugar, baking powder, salt and baking soda in a medium mixing bowl. Stir in orange juice, orange peel, shortening and egg. Mix until well blended. Stir in cranberries and nuts. Spread evenly in loaf pan. Bake for 55 minutes or until a toothpick inserted in the center comes out clean. Cool on a rack for 15 minutes. Remove from pan; cool completely. Wrap and store overnight. Makes 1 loaf (16 slices)."}},"children":[]}]},{"name":"Fragment","attribs":[],"children":[{"name":"div","attribs":{"dangerouslySetInnerHTML":{"__html":"Preheat the oven to 350F. Lightly grease an 8\" square or 9\" round pan.  To make the topping: Drizzle the 1 tablespoon butter and boiled cider into the bottom of the pan. Mix the cranberries and diced apples, and spread into the pan. Sprinkle with the sugar.<br />To make the cake: Stir together the cake ingredients, mixing until smooth. Spread the batter over the fruit in the pan. Bake the cake for 35 to 40 minutes, until the center feels firm when pressed, and a toothpick inserted into the middle comes out clean. Remove the cake from the oven, and invert it over a heatproof serving plate. Wait a few seconds, then carefully lift off the pan. Scrape any stuck-on fruit in the pan back onto the cake. Serve warm or at room temperature. Whipped cream is a suitable accompaniment."}},"children":[]}]}]},{"accessor":"Title","name":"Title","type":"character"},{"accessor":"Ingredients","name":"Ingredients","type":"character"},{"accessor":"Instructions","name":"Instructions","type":"character","show":false},{"accessor":"Source","name":"Source","type":["glue","character"],"html":true}],"resizable":true,"searchable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"highlight":true,"striped":true,"dataKey":"52b6a52a22c092eaccfc2f901e57f8f1","key":"52b6a52a22c092eaccfc2f901e57f8f1"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+
+---
+class: center
+
+# I. Will. Never. Remember. This.
+
+
+![](https://media.giphy.com/media/dn052prOONaHPtTvp8/giphy.gif)
+
+---
+## Code snippet!
+
+
+```r
+snippet expandable_row_table
+  # Function needed according to Greg Lin, creator of reactable
+  html &lt;- function(x, inline = FALSE) {
+    container &lt;- if (inline) htmltools::span else htmltools::div
+    container(dangerouslySetInnerHTML = list("__html" = x))
+  }
+  reactable(${1:mydf}, striped = TRUE, highlight = TRUE, resizable = TRUE,   searchable = TRUE,
+            columns = list(
+              Source = colDef(html = TRUE),
+              ${2:mycol} = colDef(show = FALSE)
+            ),
+              # if ${2:mycol} exist, make that expandable
+              details = function(index) {
+                if(${1:mydf}[['${2:mycol}']][index] != "") {
+                  htmltools::tagList(
+                    html(${1:mydf}[['${2:mycol}']][index])
+                  )
+                } 
+              }
+  )
+```
+
+---
+# Additional Resources
+
+DT site: 
+
+reactable site:
+
+My sparklines in tables tutorial:
+
+My expandable rows tutorial:
+
+My code snippets tutorial:
+
+My Do More With R tutorials:
+
+Link to this presentation's resources:
+---
 
 
     </textarea>

@@ -1,8 +1,8 @@
 ---
-title: "Interactive Tables in R<br />with DT and reactable"
-subtitle: "Presentation at R Ladies Boston"
-author: "Sharon Machlis"
-date: "2021-01-12"
+title: 'Interactive Tables in R<br />with DT and reactable'
+subtitle: 'Presentation at R Ladies Boston'
+author: 'Sharon Machlis'
+date: '2021-01-12<br /><br />`r icon::fa("twitter")`[sharon000](https://twitter.com/sharon000)<br />Do More With R tutorials - [bit.ly/domorewithR](bit.ly/domorewithR)'
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -13,17 +13,32 @@ output:
       highlightLines: true
       countIncrementalSlides: false
 ---
+```{r setup, echo=FALSE, warning = FALSE, message = FALSE}
+knitr::opts_chunk$set(fig.retina = 3)
+# Allow using #<< to highlight code
+# per https://www.garrickadenbuie.com/blog/highlight-lines-without-breaking-the-code-in-xaringan/
+hook_source <- knitr::knit_hooks$get('source')
+knitr::knit_hooks$set(source = function(x, options) {
+  x <- stringr::str_replace(x, "^[[:blank:]]?([^*].+?)[[:blank:]]*#<<[[:blank:]]*$", "*\\1")
+  hook_source(x, options)
+})
+```
 
 class: center, middle
+## Winner: [RStudio Table Contest](https://blog.rstudio.com/2020/12/23/winners-of-the-2020-rstudio-table-contest/)
+
+
 
 ![](img/sqltable.gif)
 
 ---
 class: center, middle
+[RStudio Table Contest Honorable Mention](https://blog.rstudio.com/2020/12/23/winners-of-the-2020-rstudio-table-contest/)
 ![](img/binge_table.PNG)
 
 ---
-Combine table data with mini data visualizations (sparklines):
+## I've found useful:
+Combine a searchable, sortable table of _latest_ data with mini data visualizations (sparklines) showing _trends_:
 
 ![](img/covid.gif)
 ---
@@ -36,7 +51,8 @@ Combine table data with mini data visualizations (sparklines):
 ### reactable
 
 ---
-#### Get latest Covid data by state:
+#### Example: Latest Covid Data by State
+Import CSV file into R
 
 ```{r}
 library(dplyr)
@@ -52,14 +68,14 @@ state_data <- rio::import("data/latest_covid_by_state.csv") %>%
 
 ---
 
-## DT default [https://rstudio.github.io/DT/](https://rstudio.github.io/DT/)
+## Basic DT table default [https://rstudio.github.io/DT/](https://rstudio.github.io/DT/)
 
 ```{r eval=TRUE}
 DT::datatable(state_data, options = list(pageLength = 6))
 ```
 
 ---
-## reactable default
+## Basic reactable table default
 
 ```{r eval=TRUE}
 reactable::reactable(state_data)
@@ -118,13 +134,260 @@ Example: [http://apps.machlis.com/shiny/nicar20_resources/](http://apps.machlis.
 
 ---
 
+## Code review: Create sparkline data frame
+
+Group and summarize by state to get one row for each state
+
+```{r eval=FALSE}
+sparkline_data <- all_data %>%
+  filter(date >= as.Date("2020-04-01")) %>%
+  slice(which(row_number() %% 7 == 1)) %>%
+*  group_by(state) %>%
+*  summarize(
+    CasesPer100KTrend = spk_chr(
+      newCasesPer100K, type ="line",
+      chartRangeMin = 0, 
+      chartRangeMax = max(newCasesPer100K, na.rm = TRUE)
+    )
+  )
+
+```
+
+---
+Use sparkline package's `spk_chr()` function to create new column CasesPer100KTrend with the sparkline.
+
+Arguments are the column with data (`newCasesPer100K`), sparkline type (`"line"`), and optional y-axis min and max values.
+
+```{r eval=FALSE}
+sparkline_data <- all_data %>%
+  filter(date >= as.Date("2020-04-01")) %>%
+  slice(which(row_number() %% 7 == 1)) %>%
+  group_by(state) %>%
+  summarize(
+*    CasesPer100KTrend = spk_chr(
+*      newCasesPer100K, type ="line",
+*      chartRangeMin = 0, 
+*      chartRangeMax = max(newCasesPer100K, na.rm = TRUE)
+    )
+  )
+
+```
+
+---
+## Code review: Create table with sparklines
+
+`escape = FALSE` evaluates HTML to display as if it was on a Web page instead of showing the actual HTML code
+
+```{r eval = FALSE}
+datatable(table_data, 
+*         escape = FALSE, 
+          options = list(pageLength = 25,
+          search = list(regex = TRUE),
+          fnDrawCallback = htmlwidgets::JS(
+                                      '
+function(){
+  HTMLWidgets.staticRender();
+}
+'
+)), rownames = FALSE, filter = 'top') %>%
+      spk_add_deps()   %>%
+      formatPercentage("testPositivity", digits = 1)
+ 
+```
+
+---
+This is optional - I'm enabling searching by regular expression
+
+```{r eval = FALSE}
+datatable(table_data, 
+          escape = FALSE, 
+          options = list(pageLength = 25,
+          * search = list(regex = TRUE),
+          fnDrawCallback = htmlwidgets::JS(
+                                      '
+function(){
+  HTMLWidgets.staticRender();
+}
+'
+)), rownames = FALSE, filter = 'top') %>%
+      spk_add_deps()   %>%
+      formatPercentage("testPositivity", digits = 1)
+ 
+```
+
+---
+These lines of code are critical for the sparkline HTML to display as sparklines. They are the same for every table, and I've saved them as an RStudio code snippet.
+
+```{r eval = FALSE}
+datatable(table_data, 
+          escape = FALSE, 
+          options = list(pageLength = 25,
+          search = list(regex = TRUE),
+*          fnDrawCallback = htmlwidgets::JS(
+*                                      '
+* function(){
+*  HTMLWidgets.staticRender();
+* }
+* '
+)), rownames = FALSE, filter = 'top') %>%
+*      spk_add_deps()   %>%
+      formatPercentage("testPositivity", digits = 1)
+ 
+```
+
+---
+My snippet which shows up when I type sparkline_table
+
+```{r eval = FALSE}
+snippet sparkline_table
+		datatable(${1:mydata}, escape = FALSE, 
+	options = list(pageLength = 25,search = list(regex = TRUE),
+		fnDrawCallback = htmlwidgets::JS(
+		   '
+		function(){
+		HTMLWidgets.staticRender();
+		}
+		'
+		)), rownames = FALSE, filter = 'top') %>%
+			spk_add_deps()
+
+```
+
+---
+
+![](img/snippet.gif)
+
+---
+## Code review: Create table with expandable row
+
+#### Add styling and options to default reactable: row stripes, reaction when hovering over a table row, allow columns to be resized, add search box.
+
+```{r eval = FALSE}
+reactable(my_recipes, 
+*          striped = TRUE, highlight = TRUE, 
+*           resizable = TRUE, searchable = TRUE)
 
 
+```
+
+```{r echo = FALSE}
+my_recipes <- import("data/cranberry_recipes.xlsx") %>%
+  mutate(
+    Source = glue("<a title='{OriginalSource}' href='{URL}'>{OriginalSource}</a> ")
+  ) %>%
+  select(-OriginalSource, -URL)
+reactable(my_recipes, striped = TRUE, highlight = TRUE, resizable = TRUE, searchable = TRUE)
+```
+
+---
+#### Add column definition for Source column so HTML displays as HTML
+
+```{r}
+reactable(my_recipes, striped = TRUE, highlight = TRUE, resizable = TRUE, searchable = TRUE,
+          columns = list(  #<<
+            Source = colDef(html = TRUE)  #<<
+          )  #<<
+)  
+```
+
+---
+
+#### Hide Instructions row, add function for expandable row
 
 
+```{r}
+# Function needed according to Greg Lin, creator of reactable #<<
+html <- function(x, inline = FALSE) { #<<
+  container <- if (inline) htmltools::span else htmltools::div #<<
+  container(dangerouslySetInnerHTML = list("__html" = x)) #<<
+}  #<<
+
+reactable(my_recipes, striped = TRUE, highlight = TRUE, resizable = TRUE, searchable = TRUE,
+          columns = list(  
+            Source = colDef(html = TRUE),
+            Instructions = colDef(show = FALSE) #<<
+          )  
+)
+```
+
+---
+
+#### Finally, add details function to make the expandable rows come to life
+
+```{r}
+# Function needed according to Greg Lin, creator of reactable 
+html <- function(x, inline = FALSE) { 
+  container <- if (inline) htmltools::span else htmltools::div 
+  container(dangerouslySetInnerHTML = list("__html" = x)) 
+}  
+
+reactable(my_recipes, striped = TRUE, highlight = TRUE, resizable = TRUE, searchable = TRUE,
+          columns = list(  
+            Source = colDef(html = TRUE),
+            Instructions = colDef(show = FALSE) #<<
+          ),
+            # if Instructions exist, make that expandable  #<<
+            details = function(index) { #<<
+              if(my_recipes$Instructions[index] != "") { #<<
+                htmltools::tagList( #<<
+                  html(my_recipes$Instructions[index]) #<<
+                ) #<<
+              } #<<
+            } #<<
+)
+```
+
+---
+class: center
+
+# I. Will. Never. Remember. This.
 
 
+![](https://media.giphy.com/media/dn052prOONaHPtTvp8/giphy.gif)
 
+---
+## Code snippet!
 
+```{r eval=FALSE}
+snippet expandable_row_table
+  # Function needed according to Greg Lin, creator of reactable
+  html <- function(x, inline = FALSE) {
+    container <- if (inline) htmltools::span else htmltools::div
+    container(dangerouslySetInnerHTML = list("__html" = x))
+  }
+  reactable(${1:mydf}, striped = TRUE, highlight = TRUE, resizable = TRUE,   searchable = TRUE,
+            columns = list(
+              Source = colDef(html = TRUE),
+              ${2:mycol} = colDef(show = FALSE)
+            ),
+              # if ${2:mycol} exist, make that expandable
+              details = function(index) {
+                if(${1:mydf}[['${2:mycol}']][index] != "") {
+                  htmltools::tagList(
+                    html(${1:mydf}[['${2:mycol}']][index])
+                  )
+                } 
+              }
+  )
+
+```
+
+---
+# Additional Resources
+
+DT site: 
+
+reactable site:
+
+My sparklines in tables tutorial:
+
+My expandable rows tutorial:
+
+My code snippets tutorial:
+
+My Do More With R tutorials:
+
+Link to this presentation's resources:
+---
 
 

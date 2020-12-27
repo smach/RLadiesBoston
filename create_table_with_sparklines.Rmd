@@ -3,16 +3,14 @@ title: "Create Table with Sparklines"
 subtitle: "Presentation at R Ladies Boston"
 author: "Sharon Machlis"
 date: "2021-01-12"
-output: 
-  html_document:
-    css: "css/theme-rladies.css"
+output: html_notebook
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Import data from CovidActNow.org
+## Import data I previously downloaded from CovidActNow.org
 
 ```{r}
 pacman::p_load(rio, dplyr, DT, sparkline)
@@ -33,13 +31,21 @@ all_data <- import("data/all_covid_by_state.csv") %>%
   ) %>%
   arrange(state, date)
 
-head(all_data)
+
+glimpse(all_data)
 
 ```
 
+```{r}
+glimpse(latest_data)
+```
+
+
 ## Prep data for sparkline column newCasesPer100K
 
-Brute-force reduce number of entries: Start April 1 and take every 7th item only (once per week). Then use the sparkline package's spk_chr() function to generate the HTML for a line sparkline.
+I will brute-force reduce number of entries, because every day since March 1 will be a _lot_ of data points for a tiny sparkline. I'll start April 1 and take every 7th item only (once per week, same day each week). 
+
+Then I'll use the sparkline package's `spk_chr()` function to generate the HTML for a sparkline line graph:
 
 ```{r, message=FALSE}
 sparkline_data <- all_data %>%
@@ -56,20 +62,25 @@ sparkline_data <- all_data %>%
 
 ```
 
-Join sparkline_data and latest_data:
+I want to add my sparkline data frame's CasesPer100KTrend column to my latest_data data frame. I'll do that with a dplyr left_join to create a `table_data` data frame:
 
 ```{r}
 table_data <- left_join(sparkline_data, latest_data)
-
+glimpse(table_data)
 
 ```
 
-Add region to have something interesting to filter:
+This isn't really _necessary_, but I'm adding a region column to table_data so we'll have something interesting to filter by besides state names. I have a CSV file with state names and their US Census regions.
 
 ```{r}
 regions <- rio::import("data/census_regions.csv") %>%
   select(state = `State Code`, region = Division)
+glimpse(regions)
+```
+
+```{r}
 table_data <- left_join(table_data, regions)
+glimpse(table_data)
 
 ```
 

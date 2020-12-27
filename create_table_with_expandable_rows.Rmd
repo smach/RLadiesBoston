@@ -1,0 +1,82 @@
+---
+title: "Create Table with Expandable Rows"
+subtitle: "Presentation at R Ladies Boston"
+author: "Sharon Machlis"
+date: "2021-01-12"
+output: html_notebook
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Import small spreadsheet of cranberry recipes
+
+```{r}
+pacman::p_load(rio, reactable, dplyr, glue)
+my_recipes <- import("data/cranberry_recipes.xlsx")
+glimpse(my_recipes)
+```
+
+```{r}
+my_recipes <- my_recipes %>%
+  mutate(
+    Source = glue("<a title='{OriginalSource}' href='{URL}'>{OriginalSource}</a> ")
+  ) %>%
+  select(-OriginalSource, -URL)
+
+glimpse(my_recipes)
+```
+
+## Make table
+
+Default:
+
+```{r}
+reactable(my_recipes)
+```
+
+Improve design a bit; add search and resizable
+
+```{r}
+reactable(my_recipes, striped = TRUE, highlight = TRUE, resizable = TRUE, searchable = TRUE)
+```
+
+Would like HTML in Source to display as HTML: 
+
+```{r}
+reactable(my_recipes, striped = TRUE, highlight = TRUE, resizable = TRUE, searchable = TRUE,
+          columns = list(
+            Source = colDef(html = TRUE)
+          )
+)         
+
+         
+```
+What if we could make the instructions an expandable row, so the recipes and ingredients are easier to scan?
+
+```{r}
+# Function needed according to Greg Lin, creator of reactable
+html <- function(x, inline = FALSE) {
+  container <- if (inline) htmltools::span else htmltools::div
+  container(dangerouslySetInnerHTML = list("__html" = x))
+}
+reactable(my_recipes, striped = TRUE, highlight = TRUE, resizable = TRUE,   searchable = TRUE,
+          columns = list(
+            Source = colDef(html = TRUE),
+            Instructions = colDef(show = FALSE)
+          ),
+            # if Instructions exist, make that expandable
+            details = function(index) {
+                if(my_recipes[['Instructions']][index] != "") {
+                  htmltools::tagList(
+                  html(my_recipes[['Instructions']][index])
+                )
+              } 
+            }
+)
+
+
+```
+
+
