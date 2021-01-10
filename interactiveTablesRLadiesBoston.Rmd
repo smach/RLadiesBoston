@@ -37,8 +37,8 @@ class: center, middle
 ![](img/binge_table.PNG)
 
 ---
-## I've found useful:
-Combine a searchable, sortable table of _latest_ data with mini data visualizations (sparklines) showing _trends_:
+## Helped me a _lot_ at work:
+Combine a searchable, sortable table of _latest_ data with mini data visualizations (sparklines) showing _trends over time_:
 
 ![](img/covid.gif)
 ---
@@ -51,18 +51,22 @@ Combine a searchable, sortable table of _latest_ data with mini data visualizati
 ### reactable
 
 ---
-#### Example: Latest Covid Data by State
-Import CSV file into R
+#### DT Example: Latest Covid Data by State
+Import CSV file into R (downloaded from [CovidActNow](https://covidactnow.org/tools))
 
-```{r}
-library(dplyr)
+```{r message=FALSE, warning=FALSE}
+library(dplyr, quietly = TRUE)
+library(rio, quietly = TRUE)
+library(glue, quietly = TRUE)
 state_data <- rio::import("data/latest_covid_by_state.csv") %>%
-  select(state, newCasesPer100K = metrics.caseDensity, testPositivity = metrics.testPositivityRatio, lastUpdatedDate) %>%
+  select(state, newCasesPer100K = metrics.caseDensity, 
+         testPositivity = metrics.testPositivityRatio, lastUpdatedDate) %>%
   mutate(
     newCasesPer100K = round(newCasesPer100K, 1),
     testPositivity = round(testPositivity, 3)
   ) %>%
   arrange(desc(newCasesPer100K))
+glimpse(state_data)
 
 ```
 
@@ -93,18 +97,23 @@ DT::datatable(state_data, options = list(pageLength = 6), filter = 'top')
 ---
 ## DT advantages (cont)
 
-- Built-in filters sensitive to data type - major advantage over reactable
-- Better defaults (although reactable easily customized)
-- Easy to enable search by regular expression
-- Numerous extensions and plug-ins for things like buttons to download data
+ &bull; Built-in filters sensitive to data type - major advantage over reactable<br />
+--
+ &bull; Better defaults (IMO) (although reactable easily customized)<br />
+--
+ &bull; Easy to enable search by regular expression<br />
+--
+ &bull; Numerous extensions and plug-ins (don't need Shiny for a button to download data!)
 
 ---
 
 ```{r }
 library(DT)
 datatable(state_data,  filter = 'top', extensions = 'Buttons', 
-options = list(pageLength = 6, dom = 'Bfrtip', 
-          buttons = c('copy', 'csv', 'excel', 'pdf', 'print')) )
+options = list(search = list(regex = TRUE),
+          pageLength = 6, dom = 'Bfrtip', 
+          buttons = c('copy', 'csv', 'excel', 'pdf', 'print')) 
+)
 
 ```
 
@@ -125,6 +134,8 @@ Expandable rows
 
 Example: [http://apps.machlis.com/shiny/nicar20_resources/](http://apps.machlis.com/shiny/nicar20_resources/)
 
+Can handle larger data sets more easily
+
 ---
 ## Both packages
 
@@ -134,7 +145,7 @@ Example: [http://apps.machlis.com/shiny/nicar20_resources/](http://apps.machlis.
 
 ---
 
-## Code review: Create sparkline data frame
+## Code review: Create sparkline data frame for DT
 
 Group and summarize by state to get one row for each state
 
@@ -176,7 +187,7 @@ sparkline_data <- all_data %>%
 ---
 ## Code review: Create table with sparklines
 
-`escape = FALSE` evaluates HTML to display as if it was on a Web page instead of showing the actual HTML code
+`escape = FALSE` means HTML will be evaluated to display as if it was on a Web page instead of showing the actual HTML code
 
 ```{r eval = FALSE}
 datatable(table_data, 
@@ -202,7 +213,7 @@ This is optional - I'm enabling searching by regular expression
 datatable(table_data, 
           escape = FALSE, 
           options = list(pageLength = 25,
-          * search = list(regex = TRUE),
+*           search = list(regex = TRUE),
           fnDrawCallback = htmlwidgets::JS(
                                       '
 function(){
@@ -258,9 +269,9 @@ snippet sparkline_table
 ![](img/snippet.gif)
 
 ---
-## Code review: Create table with expandable row
+## Code review: Create reactable table with expandable row
 
-#### Add styling and options to default reactable: row stripes, reaction when hovering over a table row, allow columns to be resized, add search box.
+#### Basic table with a few options: row stripes, reaction when hovering over a table row, allow columns to be resized, and a search box.
 
 ```{r eval = FALSE}
 reactable(my_recipes, 
@@ -271,16 +282,17 @@ reactable(my_recipes,
 ```
 
 ```{r echo = FALSE}
-my_recipes <- import("data/cranberry_recipes.xlsx") %>%
+pacman::p_load(dplyr, reactable)
+my_recipes <- rio::import("data/cranberry_recipes.xlsx") %>%
   mutate(
-    Source = glue("<a title='{OriginalSource}' href='{URL}'>{OriginalSource}</a> ")
+    Source = glue::glue("<a title='{OriginalSource}' href='{URL}'>{OriginalSource}</a> ")
   ) %>%
   select(-OriginalSource, -URL)
 reactable(my_recipes, striped = TRUE, highlight = TRUE, resizable = TRUE, searchable = TRUE)
 ```
 
 ---
-#### Add column definition for Source column so HTML displays as HTML
+#### Add a column definition for the Source column so HTML displays as HTML
 
 ```{r}
 reactable(my_recipes, striped = TRUE, highlight = TRUE, resizable = TRUE, searchable = TRUE,
@@ -311,32 +323,30 @@ reactable(my_recipes, striped = TRUE, highlight = TRUE, resizable = TRUE, search
 ```
 
 ---
-
 #### Finally, add details function to make the expandable rows come to life
-
 ```{r}
-# Function needed according to Greg Lin, creator of reactable 
-html <- function(x, inline = FALSE) { 
-  container <- if (inline) htmltools::span else htmltools::div 
-  container(dangerouslySetInnerHTML = list("__html" = x)) 
-}  
-
 reactable(my_recipes, striped = TRUE, highlight = TRUE, resizable = TRUE, searchable = TRUE,
-          columns = list(  
-            Source = colDef(html = TRUE),
-            Instructions = colDef(show = FALSE) #<<
-          ),
-            # if Instructions exist, make that expandable  #<<
+          columns = list(Source = colDef(html = TRUE),
+            Instructions = colDef(show = FALSE)), #<<
             details = function(index) { #<<
               if(my_recipes$Instructions[index] != "") { #<<
                 htmltools::tagList( #<<
                   html(my_recipes$Instructions[index]) #<<
-                ) #<<
-              } #<<
-            } #<<
-)
+                )}}) #<<
 ```
 
+---
+#### Better look at the table
+```{r echo = FALSE}
+reactable(my_recipes, striped = TRUE, highlight = TRUE, resizable = TRUE,
+          columns = list(Source = colDef(html = TRUE),
+            Instructions = colDef(show = FALSE)), 
+            details = function(index) { #<<
+              if(my_recipes$Instructions[index] != "") { 
+                htmltools::tagList( #<<
+                  html(my_recipes$Instructions[index]) 
+                )}}) 
+```
 ---
 class: center
 
@@ -372,22 +382,102 @@ snippet expandable_row_table
 
 ```
 
+
+---
+### Sparklines with reactable
+
+Easier data format (simple list column)
+
+#### Data prep:
+
+```{r message=FALSE, warning=FALSE}
+state_latest_data <- rio::import("data/state_data_by_place.csv") %>%
+  mutate(Date = as.Date(Date)) %>%
+  filter(Date == max(Date)) %>%
+  select(Place, AvgDailyPer100K, PctPositive)
+
+state_trend_data <- rio::import("data/state_data_by_place.csv") %>%
+  mutate(Date = as.Date(Date)) %>%
+  group_by(Place) %>%
+  arrange(Date) %>%
+  summarize(
+    Trend = list(AvgDailyPer100K)
+  )
+```
+
+---
+### Data prep cont.
+
+```{r}
+state_data <- left_join(state_latest_data, state_trend_data) 
+glimpse(state_data)
+
+```
+
+---
+### Reactable with sparklines
+
+```{r}
+library(reactable)
+library(sparkline)
+reactable(state_data, columns = list(
+  Trend = colDef(cell = function(values) { #<<
+    sparkline(values, type = "bar")  #<<
+  }) #<<
+))
+```
+
+---
+### Format PctPositive column, add Place col filter and row stripes, make resizable
+
+```{r}
+reactable(state_data, striped = TRUE, resizable = TRUE,
+          columns = list(
+  Trend = colDef(cell = function(values) {
+    sparkline(values, type = "bar")
+  }),
+  PctPositive = colDef(format = colFormat(percent = TRUE, digits = 1)), #<<
+  Place = colDef(filterable = TRUE) #<<
+))
+
+
+```
+
+---
+
+## Change sparkline width from default 60
+
+```{r}
+reactable(state_data, striped = TRUE, resizable = TRUE,
+          columns = list(
+  Trend = colDef(cell = function(values) {
+    sparkline(values, type = "bar",
+              width = 120  #<<
+              )
+  }),
+  PctPositive = colDef(format = colFormat(percent = TRUE, digits = 1)), 
+  Place = colDef(filterable = TRUE) 
+))
+
+
+```
+
 ---
 # Additional Resources
 
-DT site: 
+DT site: [https://rstudio.github.io/DT/](https://rstudio.github.io/DT/)
 
-reactable site:
+reactable site: [https://glin.github.io/reactable/](https://glin.github.io/reactable/)
 
-My sparklines in tables tutorial:
+My sparklines in DT tutorial:
 
-My expandable rows tutorial:
+My reactable expandable rows tutorial:
 
 My code snippets tutorial:
 
 My Do More With R tutorials:
 
-Link to this presentation's resources:
----
+Link to this presentation's GitHub:
+
 
 
