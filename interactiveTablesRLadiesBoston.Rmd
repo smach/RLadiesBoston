@@ -1,6 +1,6 @@
 ---
 title: 'Interactive Tables in R<br />with DT and reactable'
-subtitle: 'Presentation at R Ladies Boston'
+subtitle: 'Presentation at R Ladies Boston<br /> [https://github.com/smach/RLadiesBoston](https://github.com/smach/RLadiesBoston)'
 author: 'Sharon Machlis'
 date: '2021-01-12<br /><br />`r icon::fa("twitter")`[sharon000](https://twitter.com/sharon000)<br />Do More With R tutorials - [bit.ly/domorewithR](bit.ly/domorewithR)'
 output:
@@ -417,7 +417,7 @@ glimpse(state_data)
 ---
 ### Reactable with sparklines
 
-```{r}
+```{r cache=TRUE}
 library(reactable)
 library(sparkline)
 reactable(state_data, columns = list(
@@ -430,7 +430,7 @@ reactable(state_data, columns = list(
 ---
 ### Format PctPositive column, add Place col filter and row stripes, make resizable
 
-```{r}
+```{r cache=TRUE}
 reactable(state_data, striped = TRUE, resizable = TRUE,
           columns = list(
   Trend = colDef(cell = function(values) {
@@ -445,20 +445,19 @@ reactable(state_data, striped = TRUE, resizable = TRUE,
 
 ---
 
-## Change sparkline width from default 60
+## Change sparkline width and type
 
-```{r}
+```{r cache=TRUE}
 reactable(state_data, striped = TRUE, resizable = TRUE,
           columns = list(
   Trend = colDef(cell = function(values) {
-    sparkline(values, type = "bar",
+    sparkline(values, type = "line",
               width = 120  #<<
               )
   }),
   PctPositive = colDef(format = colFormat(percent = TRUE, digits = 1)), 
   Place = colDef(filterable = TRUE) 
 ))
-
 
 ```
 
@@ -469,15 +468,15 @@ DT site: [https://rstudio.github.io/DT/](https://rstudio.github.io/DT/)
 
 reactable site: [https://glin.github.io/reactable/](https://glin.github.io/reactable/)
 
-My sparklines in DT tutorial:
+My sparklines in DT tutorial: [https://www.infoworld.com/article/3318222/how-to-add-sparklines-to-r-tables.html](https://www.infoworld.com/article/3318222/how-to-add-sparklines-to-r-tables.html)
 
-My reactable expandable rows tutorial:
+My reactable expandable rows tutorial: [https://www.infoworld.com/article/3543297/how-to-create-tables-in-r-with-expandable-rows.html](https://www.infoworld.com/article/3543297/how-to-create-tables-in-r-with-expandable-rows.html)
 
-My code snippets tutorial:
+My code snippets tutorial: [https://www.infoworld.com/article/3396616/how-to-use-rstudio-code-snippets.html](https://www.infoworld.com/article/3396616/how-to-use-rstudio-code-snippets.html)
 
-My Do More With R tutorials:
+My Do More With R tutorials: [https://bit.ly/domorewithR](bit.ly/domorewithR)
 
-Link to this presentation's GitHub:
+**Link to this presentation's GitHub: [https://github.com/smach/RLadiesBoston](https://github.com/smach/RLadiesBoston)**
 
 
 
